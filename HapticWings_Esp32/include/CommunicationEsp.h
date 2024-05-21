@@ -1,18 +1,18 @@
-#ifndef COMMUNICATION_H
-#define COMMUNICATION_H
-
+// AirPump.h
+#ifndef COMMUNICATION_ESP_H
+#define COMMUNICATION_ESP_H
+#include "Arduino.h"
 #include <ArduinoJson.h>
 
-// 传递以下五个变量：
-// 前端舵机1的角度，前端舵机2的角度，
-// 后端舵机1的角度，上端小型舵机1的角度，上端小型舵机2的角度
+// --------------------- 关于气泵 ---------------------
+// 气泵引脚和宏的相关参数
+String buff = "";
 
-// 示例 JSON 消息格式：
-// {"Mode": "Run", "Servos": [{"Angle1": 90, "Angle2": 90}, {"Angle3": 90}, {"Angle4": 180, "Angle5": 180}]}
-// {"Mode": "Run", "Servos": [{"Angle1": 0, "Angle2": 0}, {"Angle3": 0}, {"Angle4": 180, "Angle5": 180}]}
-// {"Mode": "Init", "Servos": [{"Angle1": 30, "Angle2": 30}, {"Angle3": 45}, {"Angle4": 0, "Angle5": 0}]}
+// const size_t capacity = JSON_OBJECT_SIZE(3) + 2*JSON_ARRAY_SIZE(2) + 4*JSON_OBJECT_SIZE(2); // 修改为适当的 JSON 容量，以适应舵机和步进电机的信息
+const size_t capacity = 512;
+StaticJsonDocument<capacity> jb;
 
-long* SerialReceive() {
+long* MySerialReceive(){
     static long Command[6];
     if (Serial.available()) {
         String buff;
@@ -66,5 +66,6 @@ long* SerialReceive() {
     }
     return Command;
 }
+
 
 #endif

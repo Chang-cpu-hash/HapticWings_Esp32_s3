@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include "AirPump.h"
 #include <ESP32Servo.h> // 引入ESPServo库
-#include <Communication.h>
+#include "CommunicationEsp.h"
 
 // --------------------- 其他部分 ---------------------
 
@@ -12,8 +12,8 @@ Servo upperMyMiniServo1;
 Servo upperMyMiniServo2;
 
 const int frontServoPin1 = 18; // 定义舵机连接的引脚
-const int frontServoPin2 = 5;  // 定义气泵连接的引脚
-const int backServoPin = 19;   // 定义气阀连接的引脚
+const int frontServoPin2 = 5; 
+const int backServoPin = 19;   
 const int upperMiniServoPin1 = 21;
 const int upperMiniServoPin2 = 22;
 
@@ -34,39 +34,41 @@ void setup()
 
 void loop()
 {
-    if (test)
-    {
-        for (int angle = 0; angle <= 180; angle += 1)
-        {                               // 从0度转到180度
-            frontMyServo1.write(angle); // 设置舵机角度
-            frontMyServo2.write(angle); // 设置舵机角度
-            delay(15);                  // 等待15毫秒
-        }
-        for (int angle = 180; angle >= 0; angle -= 1)
-        {                               // 从180度转回到0度
-            frontMyServo1.write(angle); // 设置舵机角度
-            frontMyServo2.write(angle); // 设置舵机角度
-            delay(15);                  // 等待15毫秒
-        }
-    }
-    else
-    {
-        long *Command = SerialReceive();
-        if (Command[0] == 0 || Command[0] == 1)
-        {
-            frontMyServo1.write(Command[1]);
-            frontMyServo2.write(Command[2]);
-            backMyServo.write(Command[3]);
-            upperMyMiniServo1.write(Command[4]);
-            upperMyMiniServo2.write(Command[5]);
-            if (Command[0] == 0)
-            {
+    // if (test)
+    // {
+    //     for (int angle = 0; angle <= 180; angle += 1)
+    //     {                               // 从0度转到180度
+    //         frontMyServo1.write(angle); // 设置舵机角度
+    //         frontMyServo2.write(angle); // 设置舵机角度
+    //         delay(15);                  // 等待15毫秒
+    //     }
+    //     for (int angle = 180; angle >= 0; angle -= 1)
+    //     {                               // 从180度转回到0度
+    //         frontMyServo1.write(angle); // 设置舵机角度
+    //         frontMyServo2.write(angle); // 设置舵机角度
+    //         delay(15);                  // 等待15毫秒
+    //     }
+    // }
+    // else
+    // {
+    //     long* Command = MySerialReceive();
+    //     if (Command[0] == 0 || Command[0] == 1)
+    //     {
+    //         frontMyServo1.write(Command[1]);
+    //         frontMyServo2.write(Command[2]);
+    //         backMyServo.write(Command[3]);
+    //         upperMyMiniServo1.write(Command[4]);
+    //         upperMyMiniServo2.write(Command[5]);
+    //         if (Command[0] == 0)
+    //         {
                 
-            }
-            if (Command[0] == 1)
-            {
+    //         }
+    //         if (Command[0] == 1)
+    //         {
 
-            }
-        }
-    }
+    //         }
+    //     }
+    // }
+
+    
 }
